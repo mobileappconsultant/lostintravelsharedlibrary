@@ -33,6 +33,8 @@ abstract class PushToGitTask: DefaultTask() {
 
     @TaskAction
     fun execute() {
+        execCmdline(arrayOf("echo", "Printing CWD"))
+        execCmdline(arrayOf("pwd"))
         execCmdline(arrayOf("git", "checkout", branch.get()))
         execCmdline(arrayOf("git", "add", filesToCommit.get().joinToString(" ")))
         execCmdline(arrayOf("git", "commit", "-m", commitMessage.get()))
