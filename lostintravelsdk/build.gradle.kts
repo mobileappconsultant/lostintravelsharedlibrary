@@ -193,6 +193,15 @@ tasks.register<PushToGitTask>("pushToGit") {
 tasks.register<VersionBumpTask>("versionBump") {
     file.set(File("${projectDir.absolutePath}/VERSION"))
     bumpType.set(VersionBumpType.CODE)
+
+    doLast {
+        exec {
+            commandLine("git", "add", ".")
+        }
+        exec {
+            commandLine("git", "commit", "-m", "\"Bumped version to ${version}\"")
+        }
+    }
 }
 
 tasks.register<IOSFrameworkPublisher>("assembleIOSFramework") {
