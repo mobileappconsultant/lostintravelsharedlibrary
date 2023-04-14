@@ -36,6 +36,8 @@ abstract class PushToGitTask: DefaultTask() {
         execCmdline(arrayOf("echo", "Printing CWD"))
         execCmdline(arrayOf("pwd"))
         execCmdline(arrayOf("git", "checkout", branch.get()))
+        execCmdline(arrayOf("echo", "Printing CWD"))
+        execCmdline(arrayOf("pwd"))
         execCmdline(arrayOf("git", "add", filesToCommit.get().joinToString(" ")))
         execCmdline(arrayOf("git", "commit", "-m", commitMessage.get()))
         execCmdline(arrayOf("git", "push", *extraPushArgs.get().toTypedArray()))
