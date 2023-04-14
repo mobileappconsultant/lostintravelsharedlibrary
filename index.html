@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>GraphQL</title>
+    <link
+		rel="stylesheet"
+		href="https://cdn.jsdelivr.net/npm/graphiql@1.8.2/graphiql.min.css"
+		integrity="sha256-CDHiHbYkDSUc3&#43;DS2TU89I9e2W3sJRUOqSmp7JC&#43;LBw="
+		crossorigin="anonymous"
+	/>
+  </head>
+  <body style="margin: 0;">
+    <div id="graphiql" style="height: 100vh;"></div>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/react@17.0.2/umd/react.production.min.js"
+		integrity="sha256-Ipu/TQ50iCCVZBUsZyNJfxrDk0E2yhaEIz0vqI&#43;kFG8="
+		crossorigin="anonymous"
+	></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/react-dom@17.0.2/umd/react-dom.production.min.js"
+		integrity="sha256-nbMykgB6tsOFJ7OdVmPpdqMFVk4ZsqWocT6issAPUF0="
+		crossorigin="anonymous"
+	></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/graphiql@1.8.2/graphiql.min.js"
+		integrity="sha256-X8vqrqZ6Rvvoq4tvRVM3LoMZCQH8jwW92tnX0iPiHPc="
+		crossorigin="anonymous"
+	></script>
+
+    <script>
+      const url = location.protocol + '//' + location.host + "/query";
+      const wsProto = location.protocol == 'https:' ? 'wss:' : 'ws:';
+      const subscriptionUrl = wsProto + '//' + location.host + "/query";
+
+      const fetcher = GraphiQL.createFetcher({ url, subscriptionUrl });
+      ReactDOM.render(
+        React.createElement(GraphiQL, {
+          fetcher: fetcher,
+          tabs: true,
+          headerEditorEnabled: true,
+          shouldPersistHeaders: true
+        }),
+        document.getElementById('graphiql'),
+      );
+    </script>
+  </body>
+</html>
