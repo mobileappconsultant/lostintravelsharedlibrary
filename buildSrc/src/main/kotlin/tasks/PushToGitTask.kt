@@ -28,7 +28,6 @@ abstract class PushToGitTask: DefaultTask() {
     init {
         branch.convention("main")
         filesToCommit.convention(project.objects.listProperty())
-        println("Files to commit: ${filesToCommit.get().toString()}")
         extraPushArgs.convention(project.objects.listProperty())
     }
 
@@ -42,7 +41,6 @@ abstract class PushToGitTask: DefaultTask() {
     }
 
     private fun execCmdline(args: Array<String>) {
-        println("CMDLine args: $args")
 
         project.exec {
             commandLine(*args)
