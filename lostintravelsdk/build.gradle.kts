@@ -1,6 +1,9 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
+import tasks.PushToGitTask
+import tasks.VersionBumpTask
+import tasks.VersionBumpType
+import tasks.IOSFrameworkPublisher
 import java.util.Properties
-import java.io.ByteArrayOutputStream
 
 
 val PACKAGE_NAMESPACE = "com.arkangel.lostintravelsharedlibrary"
@@ -26,9 +29,9 @@ val githubProperties = Properties()
 githubProperties.load(project.rootProject.file("github.properties").inputStream())
 
 
-val libName = "lostintravelsdk"
-val frameworkFileName = "$libName.xcframework"
-val githubRepo = "https://github.com/mobileappconsultant/lostintravelsharedlibrary"
+val libraryName = "lostintravelsdk"
+val frameworkFileName = "$libraryName.xcframework"
+val repositoryPath = "https://github.com/mobileappconsultant/lostintravelsharedlibrary"
 
 kotlin {
     android {
@@ -168,57 +171,6 @@ sqldelight {
     }
 }
 
-tasks.create("writeIOSPackageManifest") {
-    dependsOn("zipIOSArtifacts")
-
-    doLast {
-        val packageManifest =
-            """
-// swift-tools-version:5.3
-import PackageDescription
-
-let package = Package(
-    name: "${project.name}",
-    platforms: [
-        .iOS(.v13)
-    ],
-    products: [
-        // Products define the executables and libraries a package produces, and make them visible to other packages.
-        .library(
-            name: "$libName",
-            targets: ["$libName"])
-    ],
-    dependencies: [
-        // Dependencies declare other packages that this package depends on.
-    ],
-    targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages this package depends on.
-        .binaryTarget(
-            name: "$libName",
-            url: "$githubRepo/raw/$BRANCH_NAME/$libName.xcframework.zip",
-            checksum: "<CHECKSUM_HERE>"
-        ),
-    ]
-)
-"""
-
-        file("../Package.swift").writeText(packageManifest)
-
-        ByteArrayOutputStream().let {
-            exec {
-                commandLine("swift", "package", "compute-checksum", "../${frameworkFileName}.zip")
-                standardOutput = it
-            }
-
-            val checksum = it.toString().replace("\n", "")
-            val finalManifest = packageManifest.replace("<CHECKSUM_HERE>", checksum)
-
-            file("../Package.swift").writeText(finalManifest)
-        }
-    }
-}
-
 tasks.create<Zip>("zipIOSArtifacts") {
     // Zip file name
     archiveFileName.set("${frameworkFileName}.zip")
@@ -230,36 +182,50 @@ tasks.create<Zip>("zipIOSArtifacts") {
     from("${buildDir.absolutePath}/XCFrameworks/release")
 }
 
-tasks.create("packageiOSFramework") {
-    println("Initializing packageiOSFramework...")
-
-    val tempCapFirstChar = libName.replaceFirst(libName.first(), libName.first().toUpperCase())
-    dependsOn("assemble${tempCapFirstChar}ReleaseXCFramework", "zipIOSArtifacts", "writeIOSPackageManifest")
+tasks.register<PushToGitTask>("pushToGit") {
+    originalBranch.set("master")
+    branch.set("artifacts")
+    commitMessage.set("Updated new library version to $version")
+    filesToCommit.set(listOf("../.gitignore", "../Package.swift", "../$libraryName.xcframework.zip"))
+    extraPushArgs.set(listOf("origin", "artifacts"))
 }
 
-tasks.create("pushToGit") {
-    dependsOn("VersionBump", "packageiOSFramework", "publish")
+tasks.register<VersionBumpTask>("versionBump") {
+    file.set(File("${projectDir.absolutePath}/VERSION"))
+    bumpType.set(VersionBumpType.CODE)
+}
 
-    doLast {
-        exec {
-            commandLine("git", "add", "..")
-        }
-        exec {
-            commandLine("git", "commit", "-m", "published new library version $version")
-        }
-        exec {
-            commandLine("git", "push")
-        }
-    }
+tasks.register<IOSFrameworkPublisher>("assembleIOSFramework") {
+    val tempCapFirstChar = libraryName.replaceFirst(libraryName.first(), libraryName.first().toUpperCase())
+
+    val assembleDep = "assemble${tempCapFirstChar}ReleaseXCFramework"
+    val zipDep = "zipIOSArtifacts"
+
+    dependsOn(assembleDep, zipDep)
+
+    tasks.named(zipDep).get().mustRunAfter(tasks.named(assembleDep).get())
+
+    libName.set(libraryName)
+    githubRepo.set(repositoryPath)
+    branchName.set("artifacts")
+    archivePath.set("../$libraryName.xcframework.zip")
+    packageFile.set(project.file("../Package.swift"))
 }
-tasks.create("VersionBump") {
-    doLast {
-        val versionManger = VersionManager(File("${projectDir.absolutePath}/VERSION"))
-        versionManger.bumpCode()
-        versionManger.saveVersionString()
-        project.version = versionManger.versionToString()
-    }
+
+tasks.create("publishIOSFramework") {
+    val assembleDep = "assembleIOSFramework"
+    val pushToGitDep = "pushToGit"
+    val versionBump = "versionBump"
+    dependsOn(versionBump, assembleDep, pushToGitDep)
+
+    tasks.named(assembleDep).get().mustRunAfter(tasks.named(versionBump).get())
+    tasks.named(pushToGitDep).get().mustRunAfter(tasks.named(assembleDep).get())
 }
+
 tasks.create("publishEverything") {
-    dependsOn("pushToGit")
+    val publishIOS = "publishIOSFramework"
+    val publish = "publish"
+    dependsOn(publishIOS, publish)
+
+    tasks.named(publish).get().mustRunAfter(tasks.named(publishIOS).get())
 }

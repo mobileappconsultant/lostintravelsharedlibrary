@@ -9,3 +9,5 @@ captures
 local.properties
 xcuserdata
 github.properties
+lostintravelsdk.xcframework.zip
+Package.swift
