@@ -186,7 +186,7 @@ tasks.register<PushToGitTask>("pushToGit") {
     originalBranch.set("master")
     branch.set("artifacts")
     commitMessage.set("Updated new library version to $version")
-    filesToCommit.set(listOf("../.gitignore", "../Package.swift", "../$libraryName.xcframework.zip"))
+    filesToCommit.set(listOf(".."))
     extraPushArgs.set(listOf("origin", "artifacts"))
 }
 
