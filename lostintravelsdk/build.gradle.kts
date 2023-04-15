@@ -218,8 +218,8 @@ tasks.register<IOSFrameworkPublisher>("assembleIOSFramework") {
     tasks.named(zipDep).get().mustRunAfter(tasks.named(assembleDep).get())
 
     libName.set(libraryName)
-    githubRepo.set("https://github.com/mobileappconsultant/lostintravelsharedlibrary")
-    branchName.set(ARTIFACTS_BRANCH)
+    githubRepo.set(repositoryPath)
+    branchName.set("artifacts")
     archivePath.set("../$libraryName.xcframework.zip")
     packageFile.set(project.file("../Package.swift"))
 }
