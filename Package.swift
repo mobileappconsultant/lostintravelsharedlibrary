@@ -22,7 +22,7 @@ let package = Package(
         .binaryTarget(
             name: "lostintravelsdk",
             url: "https://github.com/mobileappconsultant/lostintravelsharedlibrary/raw/artifacts/lostintravelsdk.xcframework.zip",
-            checksum: "8e923a164cbda39e401e1fd4b108da9a94771e4ab22faa5653429d729652889f"
+            checksum: "5c4461dd01531c9cde1ad3242b10f7a41dc9084f06be3d4ecc3eacab1561e8b0"
         ),
     ]
 )
