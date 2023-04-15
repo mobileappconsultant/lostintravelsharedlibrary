@@ -7,7 +7,8 @@ import java.util.Properties
 
 
 val PACKAGE_NAMESPACE = "com.arkangel.lostintravelsharedlibrary"
-val BRANCH_NAME = "master"
+val MASTER_BRANCH = "master"
+val ARTIFACTS_BRANCH = "artifacts"
 val GRAPHQL_BASE_URL = "https://ldabs6rj.connect.remote.it/"
 val GRAPHQL_SCHEMA_FILE = "src/commonMain/graphql/schema.json"
 
@@ -175,11 +176,11 @@ tasks.create<Zip>("zipIOSArtifacts") {
 }
 
 tasks.register<PushToGitTask>("pushToGit") {
-    originalBranch.set("master")
-    branch.set("artifacts")
+    originalBranch.set(MASTER_BRANCH)
+    branch.set(ARTIFACTS_BRANCH)
     commitMessage.set("Updated new library version to $version")
     filesToCommit.set(listOf("-A"))
-    extraPushArgs.set(listOf("origin", "artifacts"))
+    extraPushArgs.set(listOf("origin", ARTIFACTS_BRANCH))
     artifactsToTransfer.set(listOf(
         File(projectDir, "../$frameworkFileName.zip").absolutePath,
         File(projectDir, "../Package.swift").absolutePath,
@@ -212,7 +213,7 @@ tasks.register<IOSFrameworkPublisher>("assembleIOSFramework") {
 
     libName.set(libraryName)
     githubRepo.set(repositoryPath)
-    branchName.set("artifacts")
+    branchName.set(ARTIFACTS_BRANCH)
     archivePath.set("../$libraryName.xcframework.zip")
     packageFile.set(project.file("../Package.swift"))
 }
