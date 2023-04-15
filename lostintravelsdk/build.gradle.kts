@@ -22,8 +22,6 @@ plugins {
 }
 
 group = PACKAGE_NAMESPACE
-/*version = "0.0.7-ALPHA"*/
-//version = versionManger.versionToString()
 
 val githubProperties = Properties()
 githubProperties.load(project.rootProject.file("github.properties").inputStream())

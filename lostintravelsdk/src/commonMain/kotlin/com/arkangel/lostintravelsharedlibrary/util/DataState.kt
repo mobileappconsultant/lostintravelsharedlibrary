@@ -8,7 +8,6 @@ data class DataState<T>(
 ) {
 
     companion object {
-
         fun <T> error(
             errors: List<com.apollographql.apollo3.api.Error>?,
         ): DataState<T> {
