@@ -186,8 +186,12 @@ tasks.register<PushToGitTask>("pushToGit") {
     originalBranch.set("master")
     branch.set("artifacts")
     commitMessage.set("Updated new library version to $version")
-    filesToCommit.set(listOf(".."))
+    filesToCommit.set(listOf("-A"))
     extraPushArgs.set(listOf("origin", "artifacts"))
+    artifactsToTransfer.set(listOf(
+        File(projectDir, "../$frameworkFileName.zip").absolutePath,
+        File(projectDir, "../Package.swift").absolutePath,
+    ))
 }
 
 tasks.register<VersionBumpTask>("versionBump") {
