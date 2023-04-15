@@ -1,0 +1,104 @@
+mutation CreateFlightOrder($input: FlightCreateOrder!) {
+    response: CreateFlightOrder(input: $input) {
+        type
+        id
+        queuingOfficeId
+        associatedRecords {
+            reference
+            creationDate
+            originSystemCode
+            flightOfferId
+        }
+        flightOffers {
+            type
+            id
+            source
+            instantTicketingRequired
+            nonHomogeneous
+            oneWay
+            lastTicketingDate
+            lastTicketingDateTime
+            numberOfBookableSeats
+            itineraries {
+                duration
+                segments {
+                    departure {
+                        iataCode
+                        terminal
+                        at
+                    }
+                    arrival {
+                        iataCode
+                        terminal
+                        at
+                    }
+                    carrierCode
+                    number
+                    aircraft {
+                        code
+                    }
+                    operating {
+                        carrierCode
+                    }
+                    duration
+                    id
+                    numberOfStops
+                    co2Emissions {
+                        weight
+                        weightUnit
+                        cabin
+                    }
+                    blacklistedInEU
+                }
+            }
+            price {
+                currency
+                total
+                base
+                fees {
+                    amount
+                    type
+                }
+                grandTotal
+                additionalServices {
+                    amount
+                    type
+                }
+            }
+            pricingOptions {
+                fareType
+                includedCheckedBagsOnly
+            }
+            validatingAirlineCodes
+            travelerPricings {
+                travelerId
+                fareOption
+                travelerType
+                price {
+                    currency
+                    total
+                    base
+                    fees {
+                        amount
+                        type
+                    }
+                    grandTotal
+                    additionalServices {
+                        amount
+                        type
+                    }
+                }
+                fareDetailsBySegment {
+                    segmentId
+                    cabin
+                    fareBasis
+                    brandedFare
+                    class
+                    includedCheckedBags {
+                        quantity
+                    }
+                }
+            }
+        }
+    }
+}

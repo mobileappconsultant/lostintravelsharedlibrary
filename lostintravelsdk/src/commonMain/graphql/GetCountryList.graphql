@@ -1,0 +1,7 @@
+query GetCountryList {
+    response: GetCountryList {
+        name
+        country_code
+        flag
+    }
+}

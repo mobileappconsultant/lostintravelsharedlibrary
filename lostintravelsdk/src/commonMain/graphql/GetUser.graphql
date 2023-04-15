@@ -1,6 +1,5 @@
-# Write your query or mutation here
-mutation CreateUser($input: CreateUser!) {
-    response: CreateNewUser(input: $input) {
+query GetUser {
+    response: GetUser {
         _id
         email
         picture
@@ -16,4 +15,3 @@ mutation CreateUser($input: CreateUser!) {
         updated_at
     }
 }
-

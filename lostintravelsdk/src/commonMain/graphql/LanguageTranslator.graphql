@@ -1,0 +1,5 @@
+mutation LanguageTranslator($input: LanguageTranslate!) {
+    response: LanguageTranslator(input: $input) {
+        translated_text
+    }
+}

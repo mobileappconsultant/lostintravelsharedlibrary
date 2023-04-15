@@ -1,0 +1,12 @@
+
+mutation CreateNewBudget($input: CreateBudget!) {
+    response: CreateNewBudget(input: $input) {
+        _id,
+        title,
+        amount,
+        start_date,
+        end_date,
+        created_at,
+        updated_at
+    }
+}

@@ -1,6 +1,6 @@
 # Write your query or mutation here
-mutation LoginUser($input: Login!) {
-    loginUser: Login(input: $input) {
+mutation Login($input: Login!) {
+    response: Login(input: $input) {
       token
     }
 }

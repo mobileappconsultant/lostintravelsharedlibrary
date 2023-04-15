@@ -1,0 +1,14 @@
+query GetFullBudgetDetail {
+    response: GetFullBudgetDetail {
+        totalSavedMoney
+        budgets {
+            _id
+            title
+            amount
+            start_date
+            end_date
+            created_at
+            updated_at
+        }
+    }
+}

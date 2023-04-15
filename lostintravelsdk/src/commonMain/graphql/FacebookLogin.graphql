@@ -1,0 +1,5 @@
+mutation FacebookLogin($input: FacebookAuth!) {
+    response: FacebookLogin(input: $input) {
+        token
+    }
+}

@@ -1,0 +1,6 @@
+query GetCurrencyList {
+    response: GetCurrencyList {
+        code
+        flag
+    }
+}

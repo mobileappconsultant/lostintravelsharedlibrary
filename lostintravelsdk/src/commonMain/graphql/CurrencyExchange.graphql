@@ -1,0 +1,6 @@
+mutation CurrencyExchange($input: CurrencyExchange!) {
+    response: CurrencyExchange(input: $input) {
+        exchange_rate,
+        amount
+    }
+}
