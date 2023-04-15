@@ -6,11 +6,21 @@ import tasks.IOSFrameworkPublisher
 import java.util.Properties
 
 
-val PACKAGE_NAMESPACE = "com.arkangel.lostintravelsharedlibrary"
-val MASTER_BRANCH = "master"
-val ARTIFACTS_BRANCH = "artifacts"
-val GRAPHQL_BASE_URL = "https://ldabs6rj.connect.remote.it/"
-val GRAPHQL_SCHEMA_FILE = "src/commonMain/graphql/schema.json"
+val projectProperties = Properties().apply {
+    load(project.rootProject.file("project.properties").inputStream())
+}
+
+
+
+val PACKAGE_NAMESPACE = projectProperties["project_namespace"] as String? ?: System.getenv("PROJECT_NAMESPACE")
+val MASTER_BRANCH = projectProperties["master_branch"] as String? ?: System.getenv("MASTER_BRANCH")
+val ARTIFACTS_BRANCH = projectProperties["artifacts"] as String? ?: System.getenv("ARTIFACTS_BRANCH")
+val GRAPHQL_BASE_URL = projectProperties["base_api_url"] as String? ?: System.getenv("SERVER_BASE_URL")
+val GRAPHQL_SCHEMA_FILE = projectProperties["graphql_schema"] as String? ?: System.getenv("GRAPHQL_SCHEMA")
+val REPO_PATH = projectProperties["repo_path"] as String? ?: System.getenv("REPO_PATH")
+val USERNAME = projectProperties["gpr.user"] as String? ?: System.getenv("GPR_USER")
+val PASSWORD = projectProperties["gpr.key"] as String? ?: System.getenv("GPR_KEY")
+
 
 plugins {
     kotlin(Plugins.multiplatform)
@@ -24,14 +34,9 @@ plugins {
 
 group = PACKAGE_NAMESPACE
 
-
-val githubProperties = Properties()
-githubProperties.load(project.rootProject.file("github.properties").inputStream())
-
-
 val libraryName = "lostintravelsdk"
 val frameworkFileName = "$libraryName.xcframework"
-val repositoryPath = "https://github.com/mobileappconsultant/lostintravelsharedlibrary"
+
 
 kotlin {
     android {
@@ -129,8 +134,8 @@ publishing {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/mobileappconsultant/lostintravelsharedlibrary")
             credentials {
-                username = githubProperties["gpr.user"] as String? ?: System.getenv("GPR_USER")
-                password = githubProperties["gpr.key"] as String? ?: System.getenv("GPR_KEY")
+                username = USERNAME
+                password = PASSWORD
             }
         }
     }
@@ -212,7 +217,7 @@ tasks.register<IOSFrameworkPublisher>("assembleIOSFramework") {
     tasks.named(zipDep).get().mustRunAfter(tasks.named(assembleDep).get())
 
     libName.set(libraryName)
-    githubRepo.set(repositoryPath)
+    githubRepo.set(REPO_PATH)
     branchName.set(ARTIFACTS_BRANCH)
     archivePath.set("../$libraryName.xcframework.zip")
     packageFile.set(project.file("../Package.swift"))
