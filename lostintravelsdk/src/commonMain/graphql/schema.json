@@ -331,6 +331,211 @@
         ]
       },
       {
+        "kind": "INPUT_OBJECT",
+        "name": "CitySearch",
+        "description": "",
+        "inputFields": [
+          {
+            "name": "keyword",
+            "description": "",
+            "isDeprecated": false,
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String"
+              }
+            }
+          },
+          {
+            "name": "CountryCode",
+            "description": "",
+            "isDeprecated": false,
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "kind": "OBJECT",
+        "name": "CitySearchAddress",
+        "description": "",
+        "fields": [
+          {
+            "name": "cityName",
+            "description": "",
+            "isDeprecated": false,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String"
+            },
+            "args": []
+          },
+          {
+            "name": "cityCode",
+            "description": "",
+            "isDeprecated": false,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String"
+            },
+            "args": []
+          },
+          {
+            "name": "countryName",
+            "description": "",
+            "isDeprecated": false,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String"
+            },
+            "args": []
+          },
+          {
+            "name": "countryCode",
+            "description": "",
+            "isDeprecated": false,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String"
+            },
+            "args": []
+          },
+          {
+            "name": "regionCode",
+            "description": "",
+            "isDeprecated": false,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String"
+            },
+            "args": []
+          }
+        ]
+      },
+      {
+        "kind": "OBJECT",
+        "name": "CitySearchDetail",
+        "description": "",
+        "fields": [
+          {
+            "name": "type",
+            "description": "",
+            "isDeprecated": false,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String"
+            },
+            "args": []
+          },
+          {
+            "name": "subType",
+            "description": "",
+            "isDeprecated": false,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String"
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "description": "",
+            "isDeprecated": false,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String"
+            },
+            "args": []
+          },
+          {
+            "name": "detailedName",
+            "description": "",
+            "isDeprecated": false,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String"
+            },
+            "args": []
+          },
+          {
+            "name": "id",
+            "description": "",
+            "isDeprecated": false,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String"
+            },
+            "args": []
+          },
+          {
+            "name": "timeZoneOffset",
+            "description": "",
+            "isDeprecated": false,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String"
+            },
+            "args": []
+          },
+          {
+            "name": "iataCode",
+            "description": "",
+            "isDeprecated": false,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String"
+            },
+            "args": []
+          },
+          {
+            "name": "geoCode",
+            "description": "",
+            "isDeprecated": false,
+            "type": {
+              "kind": "OBJECT",
+              "name": "GeoCode"
+            },
+            "args": []
+          },
+          {
+            "name": "address",
+            "description": "",
+            "isDeprecated": false,
+            "type": {
+              "kind": "OBJECT",
+              "name": "CitySearchAddress"
+            },
+            "args": []
+          }
+        ]
+      },
+      {
+        "kind": "OBJECT",
+        "name": "CitySearchResponse",
+        "description": "",
+        "fields": [
+          {
+            "name": "data",
+            "description": "",
+            "isDeprecated": false,
+            "type": {
+              "kind": "LIST",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "CitySearchDetail"
+              }
+            },
+            "args": []
+          }
+        ]
+      },
+      {
         "kind": "OBJECT",
         "name": "CoEmission",
         "description": "",
@@ -1079,7 +1284,7 @@
             "isDeprecated": false,
             "type": {
               "kind": "SCALAR",
-              "name": "String"
+              "name": "Boolean"
             },
             "args": []
           },
@@ -1251,7 +1456,7 @@
             "isDeprecated": false,
             "type": {
               "kind": "SCALAR",
-              "name": "String"
+              "name": "Boolean"
             }
           },
           {
@@ -1692,6 +1897,22 @@
         ]
       },
       {
+        "kind": "INPUT_OBJECT",
+        "name": "FlightOfferPricingRequest",
+        "description": "",
+        "inputFields": [
+          {
+            "name": "data",
+            "description": "",
+            "isDeprecated": false,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "flightOfferPriceInput"
+            }
+          }
+        ]
+      },
+      {
         "kind": "OBJECT",
         "name": "FlightOfferPricingResponse",
         "description": "",
@@ -1768,6 +1989,22 @@
               }
             },
             "args": []
+          }
+        ]
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "FlightOrderRequest",
+        "description": "",
+        "inputFields": [
+          {
+            "name": "data",
+            "description": "",
+            "isDeprecated": false,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "FlightCreateOrder"
+            }
           }
         ]
       },
@@ -1933,6 +2170,33 @@
                 "kind": "SCALAR",
                 "name": "String"
               }
+            },
+            "args": []
+          }
+        ]
+      },
+      {
+        "kind": "OBJECT",
+        "name": "GeoCode",
+        "description": "",
+        "fields": [
+          {
+            "name": "latitude",
+            "description": "",
+            "isDeprecated": false,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float"
+            },
+            "args": []
+          },
+          {
+            "name": "longitude",
+            "description": "",
+            "isDeprecated": false,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float"
             },
             "args": []
           }
@@ -2583,6 +2847,120 @@
       },
       {
         "kind": "OBJECT",
+        "name": "Place",
+        "description": "",
+        "fields": [
+          {
+            "name": "_id",
+            "description": "",
+            "isDeprecated": false,
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID"
+            },
+            "args": []
+          },
+          {
+            "name": "leadingDestinationTitle",
+            "description": "",
+            "isDeprecated": false,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String"
+            },
+            "args": []
+          },
+          {
+            "name": "subDestinationTitle",
+            "description": "",
+            "isDeprecated": false,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String"
+            },
+            "args": []
+          },
+          {
+            "name": "description",
+            "description": "",
+            "isDeprecated": false,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String"
+            },
+            "args": []
+          },
+          {
+            "name": "price",
+            "description": "",
+            "isDeprecated": false,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float"
+            },
+            "args": []
+          },
+          {
+            "name": "iataCode",
+            "description": "",
+            "isDeprecated": false,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String"
+            },
+            "args": []
+          },
+          {
+            "name": "geoPoint",
+            "description": "",
+            "isDeprecated": false,
+            "type": {
+              "kind": "OBJECT",
+              "name": "PlaceGeoPoint"
+            },
+            "args": []
+          },
+          {
+            "name": "imageUrl",
+            "description": "",
+            "isDeprecated": false,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String"
+            },
+            "args": []
+          }
+        ]
+      },
+      {
+        "kind": "OBJECT",
+        "name": "PlaceGeoPoint",
+        "description": "",
+        "fields": [
+          {
+            "name": "latitude",
+            "description": "",
+            "isDeprecated": false,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float"
+            },
+            "args": []
+          },
+          {
+            "name": "longitude",
+            "description": "",
+            "isDeprecated": false,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float"
+            },
+            "args": []
+          }
+        ]
+      },
+      {
+        "kind": "OBJECT",
         "name": "Price",
         "description": "",
         "fields": [
@@ -2838,13 +3216,10 @@
             "description": "",
             "isDeprecated": false,
             "type": {
-              "kind": "NON_NULL",
+              "kind": "LIST",
               "ofType": {
-                "kind": "LIST",
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "FlightOffer"
-                }
+                "kind": "OBJECT",
+                "name": "FlightOffer"
               }
             },
             "args": [
@@ -2861,6 +3236,89 @@
                 }
               }
             ]
+          },
+          {
+            "name": "SearchCities",
+            "description": "",
+            "isDeprecated": false,
+            "type": {
+              "kind": "LIST",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "CitySearchDetail"
+              }
+            },
+            "args": [
+              {
+                "name": "input",
+                "description": "",
+                "isDeprecated": false,
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "CitySearch"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "ExplorePlaces",
+            "description": "",
+            "isDeprecated": false,
+            "type": {
+              "kind": "LIST",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Place"
+              }
+            },
+            "args": [
+              {
+                "name": "input",
+                "description": "",
+                "isDeprecated": false,
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "QueryInput"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "QueryInput",
+        "description": "",
+        "inputFields": [
+          {
+            "name": "page",
+            "description": "",
+            "isDeprecated": false,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int"
+            }
+          },
+          {
+            "name": "limit",
+            "description": "",
+            "isDeprecated": false,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int"
+            }
+          },
+          {
+            "name": "query",
+            "description": "",
+            "isDeprecated": false,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String"
+            }
           }
         ]
       },
