@@ -36,6 +36,7 @@ group = PACKAGE_NAMESPACE
 
 val libraryName = "lostintravelsdk"
 val frameworkFileName = "$libraryName.xcframework"
+val repositoryPath = "https://github.com/mobileappconsultant/lostintravelsharedlibrary"
 
 
 kotlin {
@@ -132,7 +133,7 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/mobileappconsultant/lostintravelsharedlibrary")
+            url = uri(repositoryPath)
             credentials {
                 username = USERNAME
                 password = PASSWORD
@@ -217,7 +218,7 @@ tasks.register<IOSFrameworkPublisher>("assembleIOSFramework") {
     tasks.named(zipDep).get().mustRunAfter(tasks.named(assembleDep).get())
 
     libName.set(libraryName)
-    githubRepo.set(REPO_PATH)
+    githubRepo.set("https://github.com/mobileappconsultant/lostintravelsharedlibrary")
     branchName.set(ARTIFACTS_BRANCH)
     archivePath.set("../$libraryName.xcframework.zip")
     packageFile.set(project.file("../Package.swift"))
