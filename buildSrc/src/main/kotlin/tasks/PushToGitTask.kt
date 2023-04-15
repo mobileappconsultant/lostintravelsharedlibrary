@@ -25,23 +25,70 @@ abstract class PushToGitTask: DefaultTask() {
     @get:Input
     abstract val extraPushArgs: ListProperty<String>
 
-    init {
-        branch.convention("main")
-        filesToCommit.convention(project.objects.listProperty())
-        extraPushArgs.convention(project.objects.listProperty())
+    @get:Input
+    abstract val artifactsToTransfer: ListProperty<String>
+
+    private fun runCatch(cb: () -> Unit) {
+        try {
+            cb()
+        } catch (e: Exception) {
+            println("Exception: $e")
+        }
     }
 
     @TaskAction
     fun execute() {
-        execCmdline(arrayOf("echo", "Printing CWD"))
-        execCmdline(arrayOf("pwd"))
+        // Add uncommitted files and the artifacts we need
+
+        runCatch {
+            execCmdline(arrayOf("git", "add", "-A"))
+
+            // Stash main branch
+            execCmdline(arrayOf("git", "stash"))
+        }
+
+        // Force-add artifacts
+        execCmdline(arrayOf("git", "add", *artifactsToTransfer.get().toTypedArray(), "-f"))
+
+        // Stash the changes
+        execCmdline(arrayOf("git", "stash"))
+
+        // Checkout artifacts branch
         execCmdline(arrayOf("git", "checkout", branch.get()))
-        execCmdline(arrayOf("echo", "Printing CWD"))
-        execCmdline(arrayOf("pwd"))
-        execCmdline(arrayOf("git", "add", filesToCommit.get().joinToString(" ")))
+
+        // Pull
+        runCatch {
+            execCmdline(arrayOf("git", "pull"))
+        }
+
+        // Remove the files to prevent conflicts
+        runCatch {
+            artifactsToTransfer.get().forEach {
+                execCmdline(arrayOf("git", "rm", it))
+            }
+        }
+
+        // Pop the stash
+        execCmdline(arrayOf("git", "stash", "pop"))
+
+        // Add those files
+        execCmdline(arrayOf("git", "add", *artifactsToTransfer.get().toTypedArray()))
+
+        // Commit them
         execCmdline(arrayOf("git", "commit", "-m", commitMessage.get()))
+
+        // Push
         execCmdline(arrayOf("git", "push", *extraPushArgs.get().toTypedArray()))
-        execCmdline(arrayOf("git", "checkout", originalBranch.get(), "-f"))
+
+        // Checkout main branch
+        execCmdline(arrayOf("git", "checkout", originalBranch.get()))
+
+        // Restore the stuff
+        runCatch {
+            artifactsToTransfer.get().forEach {
+                execCmdline(arrayOf("git", "stash", "pop"))
+            }
+        }
     }
 
     private fun execCmdline(args: Array<String>) {
