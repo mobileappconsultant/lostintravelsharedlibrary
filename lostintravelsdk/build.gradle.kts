@@ -22,8 +22,7 @@ plugins {
 }
 
 group = PACKAGE_NAMESPACE
-/*version = "0.0.7-ALPHA"*/
-//version = versionManger.versionToString()
+
 
 val githubProperties = Properties()
 githubProperties.load(project.rootProject.file("github.properties").inputStream())
@@ -148,17 +147,10 @@ configure<com.apollographql.apollo3.gradle.api.ApolloExtension> {
 apollo {
     packageName.set(PACKAGE_NAMESPACE)
     generateKotlinModels.set(true)
-/*    customTypeMapping.set(mapOf(
-        "DateTime" to "java.util.Date",
-        "Date" to "java.util.Date"
-    ))*/
 
     introspection {
         schemaFile.set(File(GRAPHQL_SCHEMA_FILE))
         endpointUrl.set("${GRAPHQL_BASE_URL}graphql")
-        /* headers.set(mapOf(
-            "Authorization" to "Bearer your_auth_token"
-        ))*/
     }
 }
 
