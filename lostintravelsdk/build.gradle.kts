@@ -182,11 +182,11 @@ tasks.create<Zip>("zipIOSArtifacts") {
 }
 
 tasks.register<PushToGitTask>("pushToGit") {
-    originalBranch.set(MASTER_BRANCH)
-    branch.set(ARTIFACTS_BRANCH)
+    originalBranch.set("master")
+    branch.set("artifacts")
     commitMessage.set("Updated new library version to $version")
     filesToCommit.set(listOf("-A"))
-    extraPushArgs.set(listOf("origin", ARTIFACTS_BRANCH))
+    extraPushArgs.set(listOf("origin", "artifacts"))
     artifactsToTransfer.set(listOf(
         File(projectDir, "../$frameworkFileName.zip").absolutePath,
         File(projectDir, "../Package.swift").absolutePath,
