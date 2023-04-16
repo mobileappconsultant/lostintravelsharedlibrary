@@ -20,9 +20,13 @@ abstract class VersionBumpTask: DefaultTask() {
     @get:Input
     abstract val bumpType: Property<VersionBumpType>
 
+    private lateinit var manager: VersionManager
+
     @TaskAction
     fun execute() {
-        val manager = VersionManager(file.get())
+        println("Bumping version...")
+
+        manager = VersionManager(file.get())
 
         when (bumpType.get()) {
             VersionBumpType.MAJOR -> manager.bumpMajor()
@@ -33,6 +37,12 @@ abstract class VersionBumpTask: DefaultTask() {
         manager.saveVersionString()
 
         project.version = manager.versionToString()
+
+        println("Bumped version")
+    }
+
+    fun newVersion(): String {
+        return manager.versionToString()
     }
 
 }

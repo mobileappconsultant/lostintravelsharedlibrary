@@ -197,12 +197,9 @@ tasks.register<VersionBumpTask>("versionBump") {
     bumpType.set(VersionBumpType.CODE)
 
     doLast {
-        exec {
-            commandLine("git", "add", ".")
-        }
-        exec {
-            commandLine("git", "commit", "-m", "\"Bumped version to ${version}\"")
-        }
+        println("Telling gradle about the new version...")
+        version = newVersion()
+        println("Bumped version to $version")
     }
 }
 
