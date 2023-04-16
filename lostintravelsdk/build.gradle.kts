@@ -34,6 +34,10 @@ plugins {
 
 group = PACKAGE_NAMESPACE
 
+val githubProperties = Properties()
+githubProperties.load(project.rootProject.file("github.properties").inputStream())
+
+
 val libraryName = "lostintravelsdk"
 val frameworkFileName = "$libraryName.xcframework"
 val repositoryPath = "https://github.com/mobileappconsultant/lostintravelsharedlibrary"
@@ -77,6 +81,7 @@ kotlin {
                 implementation(Ktor.clientSerialization)
                 implementation(Ktor.content_negotiation)
                 implementation(Ktor.ktor_json_serialization)
+                implementation(MultiplatformSettings.core)
             }
         }
 
