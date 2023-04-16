@@ -27,5 +27,8 @@ interface Service {
     suspend fun getCountryList(): ApiResponse<List<GetCountryListQuery.Response>>
     suspend fun getFullBudgetDetail(): ApiResponse<GetFullBudgetDetailQuery.Response>
     suspend fun searchFlight(model: FlightSearch): ApiResponse<List<SearchFlightQuery.Response>>
+    suspend fun searchCities(model: CitySearch): ApiResponse<List<SearchCitiesQuery.Response>>
+    suspend fun explorePlaces(model: QueryInput?): ApiResponse<List<ExplorePlacesQuery.Response>>
+    suspend fun recommendedPlaces(): ApiResponse<List<RecommendedPlacesQuery.Response>>
 
 }

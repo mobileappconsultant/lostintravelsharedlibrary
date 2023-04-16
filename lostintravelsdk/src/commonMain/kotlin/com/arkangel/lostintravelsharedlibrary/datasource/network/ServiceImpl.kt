@@ -2,20 +2,22 @@ package com.arkangel.lostintravelsharedlibrary.datasource.network
 
 import com.apollographql.apollo3.api.ApolloResponse
 import com.apollographql.apollo3.api.Mutation
+import com.apollographql.apollo3.api.Optional
 import com.arkangel.lostintravelsharedlibrary.*
+import com.arkangel.lostintravelsharedlibrary.datasource.persistence.SDKSettings
 import com.arkangel.lostintravelsharedlibrary.type.*
 import model.ApiResponse
 
 class ServiceImpl() : Service {
 
     private suspend fun <D : Mutation.Data> executeMutation(model: Mutation<D>): ApolloResponse<D> {
-        return Apollo("").apolloClient.mutation(
+        return Apollo(SDKSettings.getToken()).apolloClient.mutation(
             model
         ).execute()
     }
 
     private suspend fun <D : com.apollographql.apollo3.api.Query.Data> executeQuery(model: com.apollographql.apollo3.api.Query<D>): ApolloResponse<D> {
-        return Apollo("").apolloClient.query(
+        return Apollo(SDKSettings.getToken()).apolloClient.query(
             model
         ).execute()
     }
@@ -33,6 +35,10 @@ class ServiceImpl() : Service {
     override suspend fun loginUser(model: Login): ApiResponse<LoginMutation.Response> {
 
         val response = executeMutation(LoginMutation(model))
+
+        response.data?.response?.let {
+            SDKSettings.setToken(it.token)
+        }
 
         return ApiResponse(
             data = response.data?.response,
@@ -178,6 +184,36 @@ class ServiceImpl() : Service {
 
     override suspend fun searchFlight(model: FlightSearch): ApiResponse<List<SearchFlightQuery.Response>> {
         val response = executeQuery(SearchFlightQuery(model))
+
+        return ApiResponse(
+            data = response.data?.responseFilterNotNull(),
+            error = response.errors.isNullOrEmpty().not(),
+            errors = response.errors,
+        )
+    }
+
+    override suspend fun searchCities(model: CitySearch): ApiResponse<List<SearchCitiesQuery.Response>> {
+        val response = executeQuery(SearchCitiesQuery(model))
+
+        return ApiResponse(
+            data = response.data?.responseFilterNotNull(),
+            error = response.errors.isNullOrEmpty().not(),
+            errors = response.errors,
+        )
+    }
+
+    override suspend fun explorePlaces(model: QueryInput?): ApiResponse<List<ExplorePlacesQuery.Response>> {
+        val response = executeQuery(ExplorePlacesQuery(Optional.presentIfNotNull(model)))
+
+        return ApiResponse(
+            data = response.data?.responseFilterNotNull(),
+            error = response.errors.isNullOrEmpty().not(),
+            errors = response.errors,
+        )
+    }
+
+    override suspend fun recommendedPlaces(): ApiResponse<List<RecommendedPlacesQuery.Response>> {
+        val response = executeQuery(RecommendedPlacesQuery())
 
         return ApiResponse(
             data = response.data?.responseFilterNotNull(),

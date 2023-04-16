@@ -1,0 +1,15 @@
+query RecommendedPlaces {
+    response: RecommendedPlaces {
+        _id
+        leadingDestinationTitle
+        subDestinationTitle
+        description
+        price
+        iataCode
+        geoPoint {
+            longitude
+            latitude
+        }
+        imageUrl
+    }
+}

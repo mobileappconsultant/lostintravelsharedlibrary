@@ -1,0 +1,15 @@
+query ExplorePlaces($input: QueryInput) {
+    response: ExplorePlaces(input: $input) {
+        _id
+        leadingDestinationTitle
+        subDestinationTitle
+        description
+        price
+        iataCode
+        geoPoint {
+            latitude
+            longitude
+        }
+        imageUrl
+    }
+}

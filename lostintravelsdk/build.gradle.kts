@@ -27,7 +27,6 @@ plugins {
     id(Plugins.library)
     id(Plugins.maven_publish)
     id(Plugins.graphQL)
-    id(Plugins.sqlDelight)
     id(Plugins.kotlinx_serialization)
     kotlin(Plugins.serialization) version Kotlin.version
 }
@@ -74,14 +73,15 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(GraphQl.graphQlDep)
-                implementation(SQLDelight.runtime)
-                implementation(SQLDelight.coroutines)
+                implementation(GraphQl.normalizedCache)
+                implementation(GraphQl.normalizedSQLiteCache)
                 implementation(Ktor.core)
                 implementation(Ktor.logging)
                 implementation(Ktor.clientSerialization)
                 implementation(Ktor.content_negotiation)
                 implementation(Ktor.ktor_json_serialization)
                 implementation(MultiplatformSettings.core)
+                implementation(MultiplatformSettings.noArg)
             }
         }
 
@@ -163,15 +163,6 @@ apollo {
     introspection {
         schemaFile.set(File(GRAPHQL_SCHEMA_FILE))
         endpointUrl.set("${GRAPHQL_BASE_URL}graphql")
-    }
-}
-
-
-
-sqldelight {
-    database("LostInTravelDatabase") {
-        packageName = "$PACKAGE_NAMESPACE.datasource.cache"
-        sourceFolders = listOf("sqldelight")
     }
 }
 

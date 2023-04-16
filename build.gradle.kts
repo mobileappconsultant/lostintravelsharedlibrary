@@ -18,8 +18,6 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-
-        classpath(Build.sqlDelightGradlePlugin)
         classpath(Build.graphQlPlugin)
     }
 }

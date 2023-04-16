@@ -1,0 +1,22 @@
+query SearchCities($input: CitySearch!) {
+    response: SearchCities(input: $input) {
+        type
+        subType
+        name
+        detailedName
+        id
+        timeZoneOffset
+        iataCode
+        geoCode {
+            longitude
+            latitude
+        }
+        address {
+            cityCode
+            cityName
+            countryCode
+            countryName
+            regionCode
+        }
+    }
+}
