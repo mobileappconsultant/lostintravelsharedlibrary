@@ -1,8 +1,7 @@
 package com.arkangel.lostintravelsharedlibrary.interactors
 
 import com.apollographql.apollo3.api.Error
-import com.arkangel.lostintravelsharedlibrary.VerifyEmailMutation
-import com.arkangel.lostintravelsharedlibrary.datasource.network.AuthApiService
+import com.arkangel.lostintravelsharedlibrary.datasource.network.Service
 import com.arkangel.lostintravelsharedlibrary.datasource.network.ServiceImpl
 import com.arkangel.lostintravelsharedlibrary.util.CommonFlow
 import com.arkangel.lostintravelsharedlibrary.util.DataState
@@ -14,7 +13,7 @@ internal interface BaseUseCase<Response, Input> {
 
     fun execute(input: Input): CommonFlow<DataState<Response>>
 
-    fun getApiService(): AuthApiService = ServiceImpl()
+    fun getApiService(): Service = ServiceImpl()
 
     fun makeFlow(
         input: Input,

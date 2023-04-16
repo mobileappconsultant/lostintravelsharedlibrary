@@ -4,10 +4,9 @@ import com.apollographql.apollo3.api.ApolloResponse
 import com.apollographql.apollo3.api.Mutation
 import com.arkangel.lostintravelsharedlibrary.*
 import com.arkangel.lostintravelsharedlibrary.type.*
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import model.ApiResponse
 
-class ServiceImpl() : AuthApiService {
+class ServiceImpl() : Service {
 
     private suspend fun <D : Mutation.Data> executeMutation(model: Mutation<D>): ApolloResponse<D> {
         return Apollo("").apolloClient.mutation(

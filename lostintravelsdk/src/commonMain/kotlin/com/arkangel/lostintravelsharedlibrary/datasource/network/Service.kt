@@ -4,7 +4,7 @@ import com.arkangel.lostintravelsharedlibrary.*
 import com.arkangel.lostintravelsharedlibrary.type.*
 import model.ApiResponse
 
-interface AuthApiService {
+interface Service {
 
     // Mutations
     suspend fun createUser(model: CreateUser): ApiResponse<CreateUserMutation.Response>
