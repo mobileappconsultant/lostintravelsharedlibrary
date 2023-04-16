@@ -33,10 +33,6 @@ plugins {
 
 group = PACKAGE_NAMESPACE
 
-val githubProperties = Properties()
-githubProperties.load(project.rootProject.file("github.properties").inputStream())
-
-
 val libraryName = "lostintravelsdk"
 val frameworkFileName = "$libraryName.xcframework"
 val repositoryPath = "https://github.com/mobileappconsultant/lostintravelsharedlibrary"
