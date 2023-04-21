@@ -1,0 +1,6 @@
+framework module lostintravelsdk {
+    umbrella header "lostintravelsdk.h"
+
+    export *
+    module * { export * }
+}
