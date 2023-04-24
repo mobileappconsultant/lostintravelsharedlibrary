@@ -206,7 +206,7 @@ class ServiceImpl() : Service {
         val response = executeQuery(ExplorePlacesQuery(Optional.presentIfNotNull(model)))
 
         return ApiResponse(
-            data = response.data?.responseFilterNotNull(),
+            data = response.data?.responseFilterNotNull()?.map { it.copy(imageUrl = it.imageUrl?.replace("http://", "https://")) },
             error = response.errors.isNullOrEmpty().not(),
             errors = response.errors,
         )
@@ -216,7 +216,7 @@ class ServiceImpl() : Service {
         val response = executeQuery(RecommendedPlacesQuery())
 
         return ApiResponse(
-            data = response.data?.responseFilterNotNull(),
+            data = response.data?.responseFilterNotNull()?.map { it.copy(imageUrl = it.imageUrl?.replace("http://", "https://")) },
             error = response.errors.isNullOrEmpty().not(),
             errors = response.errors,
         )

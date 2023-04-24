@@ -10,6 +10,7 @@ import com.apollographql.apollo3.cache.normalized.normalizedCache
 import com.apollographql.apollo3.network.http.HttpInterceptor
 import com.apollographql.apollo3.network.http.HttpInterceptorChain
 import com.apollographql.apollo3.network.http.HttpNetworkTransport
+import com.apollographql.apollo3.network.http.LoggingInterceptor
 import com.arkangel.lostintravelsharedlibrary.datasource.persistence.NetworkCache
 
 
@@ -19,7 +20,8 @@ class Apollo(token: String) {
     val apolloClient = ApolloClient.Builder().networkTransport(
             HttpNetworkTransport.Builder().addInterceptor(
                 interceptor = AuthorizationInterceptor(token)
-            ).serverUrl(serverUrl)
+            ).addInterceptor(LoggingInterceptor())
+                .serverUrl(serverUrl)
                 .build()
         ).fetchPolicy(FetchPolicy.NetworkFirst)
         .normalizedCache(NetworkCache.cache)
