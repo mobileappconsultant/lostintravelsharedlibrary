@@ -103,6 +103,11 @@ class ServiceImpl() : Service {
 
     override suspend fun googleLogin(model: GoogleAuth): ApiResponse<GoogleLoginMutation.Response> {
         val response = executeMutation(GoogleLoginMutation(model))
+
+        response.data?.response?.let {
+            SDKSettings.setToken(it.token)
+        }
+
         return ApiResponse(
             data = response.data?.response,
             error = response.errors.isNullOrEmpty().not(),
@@ -112,6 +117,11 @@ class ServiceImpl() : Service {
 
     override suspend fun facebookLogin(model: FacebookAuth): ApiResponse<FacebookLoginMutation.Response> {
         val response = executeMutation(FacebookLoginMutation(model))
+
+        response.data?.response?.let {
+            SDKSettings.setToken(it.token)
+        }
+
         return ApiResponse(
             data = response.data?.response,
             error = response.errors.isNullOrEmpty().not(),
