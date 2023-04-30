@@ -1,0 +1,17 @@
+mutation UpdateUser($input: UpdateUserInput!) {
+    response: UpdateUser(input: $input) {
+        _id
+        email
+        picture
+        full_name
+        location {
+            latitude
+            longitude
+        }
+        country
+        is_verified
+        is_password_reset
+        created_at
+        updated_at
+    }
+}

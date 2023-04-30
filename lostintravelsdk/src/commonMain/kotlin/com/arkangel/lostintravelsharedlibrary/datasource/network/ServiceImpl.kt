@@ -156,6 +156,26 @@ class ServiceImpl() : Service {
         )
     }
 
+    override suspend fun bookHotel(model: HotelGuestBookingInput): ApiResponse<BookHotelMutation.Response> {
+        val response = executeMutation(BookHotelMutation(model))
+
+        return ApiResponse(
+            data = response.data?.response,
+            error = response.errors.isNullOrEmpty().not(),
+            errors = response.errors,
+        )
+    }
+
+    override suspend fun updateUser(model: UpdateUserInput): ApiResponse<UpdateUserMutation.Response> {
+        val response = executeMutation(UpdateUserMutation(model))
+
+        return ApiResponse(
+            data = response.data?.response,
+            error = response.errors.isNullOrEmpty().not(),
+            errors = response.errors,
+        )
+    }
+
     override suspend fun getUser(): ApiResponse<GetUserQuery.Response> {
         val response = executeQuery(GetUserQuery())
         return ApiResponse(
@@ -212,8 +232,8 @@ class ServiceImpl() : Service {
         )
     }
 
-    override suspend fun explorePlaces(model: QueryInput?): ApiResponse<List<ExplorePlacesQuery.Response>> {
-        val response = executeQuery(ExplorePlacesQuery(Optional.presentIfNotNull(model)))
+    override suspend fun explorePlaces(model: QueryInput): ApiResponse<List<ExplorePlacesQuery.Response>> {
+        val response = executeQuery(ExplorePlacesQuery(model))
 
         return ApiResponse(
             data = response.data?.responseFilterNotNull()?.map { it.copy(imageUrl = it.imageUrl?.replace("http://", "https://")) },
@@ -227,6 +247,36 @@ class ServiceImpl() : Service {
 
         return ApiResponse(
             data = response.data?.responseFilterNotNull()?.map { it.copy(imageUrl = it.imageUrl?.replace("http://", "https://")) },
+            error = response.errors.isNullOrEmpty().not(),
+            errors = response.errors,
+        )
+    }
+
+    override suspend fun searchHotels(model: HotelQueryInput): ApiResponse<List<SearchHotelsQuery.Response>> {
+        val response = executeQuery(SearchHotelsQuery(model))
+
+        return ApiResponse(
+            data = response.data?.responseFilterNotNull(),
+            error = response.errors.isNullOrEmpty().not(),
+            errors = response.errors,
+        )
+    }
+
+    override suspend fun checkHotelAvailability(model: HotelQueryDetailInput): ApiResponse<List<CheckHotelAvailabilityQuery.Response>> {
+        val response = executeQuery(CheckHotelAvailabilityQuery(model))
+
+        return ApiResponse(
+            data = response.data?.responseFilterNotNull(),
+            error = response.errors.isNullOrEmpty().not(),
+            errors = response.errors,
+        )
+    }
+
+    override suspend fun similarPlacesRecommendations(model: String): ApiResponse<List<SimilarPlacesRecommendationsQuery.Response>> {
+        val response = executeQuery(SimilarPlacesRecommendationsQuery(model))
+
+        return ApiResponse(
+            data = response.data?.responseFilterNotNull(),
             error = response.errors.isNullOrEmpty().not(),
             errors = response.errors,
         )

@@ -20,6 +20,8 @@ interface Service {
     suspend fun languageTranslator(model: LanguageTranslate): ApiResponse<LanguageTranslatorMutation.Response>
     suspend fun confirmFlightOfferPricing(model: FlightOfferPriceInput): ApiResponse<ConfirmFlightOfferPricingMutation.Response>
     suspend fun createFlightOrder(model: FlightCreateOrder): ApiResponse<CreateFlightOrderMutation.Response>
+    suspend fun bookHotel(model: HotelGuestBookingInput): ApiResponse<BookHotelMutation.Response>
+    suspend fun updateUser(model: UpdateUserInput): ApiResponse<UpdateUserMutation.Response>
 
     // Queries
     suspend fun getUser(): ApiResponse<GetUserQuery.Response>
@@ -28,7 +30,11 @@ interface Service {
     suspend fun getFullBudgetDetail(): ApiResponse<GetFullBudgetDetailQuery.Response>
     suspend fun searchFlight(model: FlightSearch): ApiResponse<List<SearchFlightQuery.Response>>
     suspend fun searchCities(model: CitySearch): ApiResponse<List<SearchCitiesQuery.Response>>
-    suspend fun explorePlaces(model: QueryInput?): ApiResponse<List<ExplorePlacesQuery.Response>>
+    suspend fun explorePlaces(model: QueryInput): ApiResponse<List<ExplorePlacesQuery.Response>>
     suspend fun recommendedPlaces(): ApiResponse<List<RecommendedPlacesQuery.Response>>
+    suspend fun searchHotels(model: HotelQueryInput): ApiResponse<List<SearchHotelsQuery.Response>>
+    suspend fun checkHotelAvailability(model: HotelQueryDetailInput): ApiResponse<List<CheckHotelAvailabilityQuery.Response>>
+    suspend fun similarPlacesRecommendations(model: String): ApiResponse<List<SimilarPlacesRecommendationsQuery.Response>>
+
 
 }

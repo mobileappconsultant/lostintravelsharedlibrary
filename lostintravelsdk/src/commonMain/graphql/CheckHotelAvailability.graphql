@@ -1,0 +1,22 @@
+
+query CheckHotelAvailability($input: HotelQueryDetailInput!) {
+    response: CheckHotelAvailability(input: $input) {
+        available
+        hotel {
+            longitude
+            latitude
+            address {
+                countryCode
+            }
+            geoCode {
+                latitude
+                longitude
+            }
+            name
+            iataCode
+            chainCode
+            dupeId
+            hotelId
+        }
+    }
+}

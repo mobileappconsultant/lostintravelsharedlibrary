@@ -1,0 +1,18 @@
+query SearchHotels($input: HotelQueryInput!) {
+    response: SearchHotels(input: $input) {
+        chainCode
+        iataCode
+        dupeId
+        name
+        hotelId
+        geoCode {
+            latitude
+            longitude
+        }
+        address {
+            countryCode
+        }
+        latitude
+        longitude
+    }
+}

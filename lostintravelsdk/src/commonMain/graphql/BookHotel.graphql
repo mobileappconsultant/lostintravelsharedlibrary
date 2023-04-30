@@ -1,0 +1,6 @@
+mutation BookHotel($input: HotelGuestBookingInput!) {
+    response: BookHotel(input: $input) {
+        id
+        providerConfirmationId
+    }
+}

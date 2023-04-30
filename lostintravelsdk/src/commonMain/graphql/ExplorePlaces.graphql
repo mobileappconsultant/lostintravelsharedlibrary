@@ -1,4 +1,4 @@
-query ExplorePlaces($input: QueryInput) {
+query ExplorePlaces($input: QueryInput!) {
     response: ExplorePlaces(input: $input) {
         _id
         leadingDestinationTitle

@@ -1,0 +1,15 @@
+query SimilarPlacesRecommendations($input: String!) {
+    response: SimilarPlacesRecommendations(input: $input) {
+        iataCode
+        description
+        geoPoint {
+            longitude
+            latitude
+        }
+        imageUrl
+        leadingDestinationTitle
+        price
+        subDestinationTitle
+        _id
+    }
+}

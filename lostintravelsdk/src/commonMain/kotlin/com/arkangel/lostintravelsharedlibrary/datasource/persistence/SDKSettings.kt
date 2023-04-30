@@ -10,4 +10,8 @@ object SDKSettings {
     }
 
     fun getToken() = settings.getString("auth_token", "")
+
+    fun removeToken() {
+        settings.remove("auth_token")
+    }
 }
