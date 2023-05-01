@@ -1,6 +1,7 @@
 package com.arkangel.lostintravelsharedlibrary.util
 
 import io.ktor.client.*
+import io.ktor.client.call.body
 import io.ktor.client.request.*
 import io.ktor.client.request.forms.*
 import io.ktor.client.statement.*
@@ -22,15 +23,12 @@ object ImageUploader {
     private val uploadPreset = "lostintravel"
     private val cloudName = "mobile-paradigm"
 
-    /**
-     * @param input - Base64-encoded string
-     */
-    fun uploadImage(input: String): Flow<UploadResult>  = flow {
+    fun uploadImage(input: ImageBytes): Flow<UploadResult>  = flow {
         val client = HttpClient()
 
         val auth = "Basic ${"$apiKey:$apiSecret".encodeToBase64()}"
 
-        val image = input.decodeBase64ToByteArray()
+        val image = input.toByteArray()
 
         val response: HttpResponse = client.submitFormWithBinaryData(
             url = "https://api.cloudinary.com/v1_1/$cloudName/image/upload",
@@ -49,6 +47,8 @@ object ImageUploader {
             }
         }
 
+        println("Request: ${response.request.call.body<String>()}")
+
         if (response.status.value == 200 || response.status.value == 201) {
             val body = response.bodyAsText()
 
@@ -59,6 +59,7 @@ object ImageUploader {
                 error = null,
             ))
         } else {
+            println("Upload Error: ${response.bodyAsText()}")
             emit(UploadResult(
                 success = null,
                 error = response.status.value,
