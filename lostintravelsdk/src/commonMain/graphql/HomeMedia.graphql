@@ -1,0 +1,6 @@
+query HomeMedia {
+    response: HomeMedia {
+        homeImageUrl
+        homeVideoUrl
+    }
+}

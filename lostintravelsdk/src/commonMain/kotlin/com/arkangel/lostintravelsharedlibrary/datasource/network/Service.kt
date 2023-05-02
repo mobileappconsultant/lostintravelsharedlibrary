@@ -35,6 +35,7 @@ interface Service {
     suspend fun searchHotels(model: HotelQueryInput): ApiResponse<List<SearchHotelsQuery.Response>>
     suspend fun checkHotelAvailability(model: HotelQueryDetailInput): ApiResponse<List<CheckHotelAvailabilityQuery.Response>>
     suspend fun similarPlacesRecommendations(model: String): ApiResponse<List<SimilarPlacesRecommendationsQuery.Response>>
+    suspend fun homeMedia(): ApiResponse<HomeMediaQuery.Response>
 
 
 }

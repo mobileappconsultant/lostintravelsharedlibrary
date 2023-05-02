@@ -281,4 +281,14 @@ class ServiceImpl() : Service {
             errors = response.errors,
         )
     }
+
+    override suspend fun homeMedia(): ApiResponse<HomeMediaQuery.Response> {
+        val response = executeQuery(HomeMediaQuery())
+
+        return ApiResponse(
+            data = response.data?.response,
+            error = !response.errors.isNullOrEmpty(),
+            errors = response.errors,
+        )
+    }
 }
