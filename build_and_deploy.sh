@@ -1,4 +1,4 @@
 #!/bin/sh
 
-./gradlew assembleIOSFramework || exit
 ./gradlew publishIOSFramework || exit
+#./gradlew versionBump || exit

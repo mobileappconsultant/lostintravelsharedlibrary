@@ -15,7 +15,7 @@ import com.arkangel.lostintravelsharedlibrary.datasource.persistence.NetworkCach
 
 
 class Apollo(token: String) {
-    private val serverUrl = "https://ldabs6rj.connect.remote.it/graphql"
+    private val serverUrl = "https://lostapi.frontendlabs.co.uk/graphql"
 
     val apolloClient = ApolloClient.Builder().networkTransport(
             HttpNetworkTransport.Builder().addInterceptor(
