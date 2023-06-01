@@ -10,6 +10,7 @@ val projectProperties = Properties().apply {
     load(project.rootProject.file("project.properties").inputStream())
 }
 
+version = "0.0.53-ALPHA"
 
 
 val PACKAGE_NAMESPACE = projectProperties["project_namespace"] as String? ?: System.getenv("PROJECT_NAMESPACE")
